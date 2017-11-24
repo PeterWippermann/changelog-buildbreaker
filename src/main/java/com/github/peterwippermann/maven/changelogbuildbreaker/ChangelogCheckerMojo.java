@@ -32,7 +32,7 @@ public class ChangelogCheckerMojo extends AbstractMojo {
 	 * 
 	 * ## [2.0.2] - 2017-11-23
 	 */
-	private static final String DEFAULT_PATTERN_FOR_UNRELEASED_CHANGES = "\\R(?<section>##\\h*\\[Unreleased\\]\\h*)\\R(?:\\h*\\R)*(?<content>\\h*(?!##\\h*\\[)\\p{Graph}+.*)\\R";
+	static final String DEFAULT_PATTERN_FOR_UNRELEASED_CHANGES = "\\R(?<section>##\\h*\\[Unreleased\\]\\h*)\\R(?:\\h*\\R)*(?<content>\\h*(?!##\\h*\\[)\\p{Graph}+.*)\\R";
 
 	private static final String UNRELEASED_CONTENT_CAPTURING_GROUP_NAME = "content";
 
@@ -126,5 +126,13 @@ public class ChangelogCheckerMojo extends AbstractMojo {
 			throw new MojoExecutionException("The changelog file " + changelogFile.getAbsolutePath()
 					+ " can't be read! Did you set proper file permissions?");
 		}
+	}
+
+	void setChangelogFile(File changelogFile) {
+		this.changelogFile = changelogFile;
+	}
+
+	void setUnreleasedChangesPattern(String unreleasedChangesPattern) {
+		this.unreleasedChangesPattern = unreleasedChangesPattern;
 	}
 }
