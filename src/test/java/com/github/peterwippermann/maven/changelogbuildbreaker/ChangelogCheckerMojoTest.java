@@ -11,9 +11,8 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import static com.github.peterwippermann.maven.changelogbuildbreaker.ChangelogCheckerMojo.*;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
+import static com.github.peterwippermann.maven.changelogbuildbreaker.ChangelogCheckerMojo.DEFAULT_PATTERN_FOR_UNRELEASED_CHANGES;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 
 /**
@@ -97,6 +96,7 @@ public class ChangelogCheckerMojoTest {
 
 		sut.execute();
 	}
+
 	@Test
 	public void testExecute_keepAChangelogReference_unreleased() throws Exception {
 		sut.setChangelogFile(getFile("CHANGELOG-keep-a-changelog-reference-unreleased.MD"));
@@ -104,22 +104,16 @@ public class ChangelogCheckerMojoTest {
 		assertForgotToUpdateTheChangelog();
 	}
 
-	private void assertForgotToUpdateTheChangelog() {
-		assertException(MojoFailureException.class, "forget to update the changelog");
-	}
-
 	private File getFile(String filename) throws URISyntaxException {
 		URL resource = this.getClass().getClassLoader().getResource(filename);
 		return resource != null ? new File(resource.toURI()) : null;
 	}
 
+	private void assertForgotToUpdateTheChangelog() {
+		assertException(MojoFailureException.class, "forget to update the changelog");
+	}
+
 	private void assertException(Class<? extends AbstractMojoExecutionException> ex, String message) {
-		try {
-			sut.execute();
-			fail("An exception was excepted but was not thrown");
-		} catch (Exception e) {
-			assertThat(e).isInstanceOf(ex);
-			assertThat(e).hasMessageContaining(message);
-		}
+		assertThatThrownBy(() -> sut.execute()).isInstanceOf(ex).hasMessageContaining(message);
 	}
 }
