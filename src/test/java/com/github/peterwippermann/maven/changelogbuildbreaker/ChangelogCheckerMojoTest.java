@@ -11,8 +11,9 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import static com.github.peterwippermann.maven.changelogbuildbreaker.ChangelogCheckerMojo.DEFAULT_PATTERN_FOR_UNRELEASED_CHANGES;
+import static com.github.peterwippermann.maven.changelogbuildbreaker.ChangelogCheckerMojo.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.when;
 
 /**
@@ -73,23 +74,38 @@ public class ChangelogCheckerMojoTest {
 	public void testExecute_nonEmptyUnreleased() throws Exception {
 		sut.setChangelogFile(getFile("CHANGELOG-non-empty-unreleased.MD"));
 
-		assertException(MojoFailureException.class, "forget to update the changelog");
+		assertForgotToUpdateTheChangelog();
 	}
 
 	@Test
 	public void testExecute_nonEmptyUnreleased_noStartingBlankLine() throws Exception {
 		sut.setChangelogFile(getFile("CHANGELOG-non-empty-unreleased-missing-starting-new-line.MD"));
 
-		// FIXME this should fail exactly as in testExecute_nonEmptyUnreleased
-		sut.execute();
+		assertForgotToUpdateTheChangelog();
 	}
 
 	@Test
 	public void testExecute_nonEmptyUnreleased_noEndingBlankLine() throws Exception {
 		sut.setChangelogFile(getFile("CHANGELOG-non-empty-unreleased-missing-ending-new-line.MD"));
 
-		// FIXME this should fail exactly as in testExecute_nonEmptyUnreleased
+		assertForgotToUpdateTheChangelog();
+	}
+
+	@Test
+	public void testExecute_keepAChangelogReference_nothingUnreleased() throws Exception {
+		sut.setChangelogFile(getFile("CHANGELOG-keep-a-changelog-reference.MD"));
+
 		sut.execute();
+	}
+	@Test
+	public void testExecute_keepAChangelogReference_unreleased() throws Exception {
+		sut.setChangelogFile(getFile("CHANGELOG-keep-a-changelog-reference-unreleased.MD"));
+
+		assertForgotToUpdateTheChangelog();
+	}
+
+	private void assertForgotToUpdateTheChangelog() {
+		assertException(MojoFailureException.class, "forget to update the changelog");
 	}
 
 	private File getFile(String filename) throws URISyntaxException {
@@ -98,10 +114,9 @@ public class ChangelogCheckerMojoTest {
 	}
 
 	private void assertException(Class<? extends AbstractMojoExecutionException> ex, String message) {
-		// TODO this would be prettier with Java 8:
-		// assertThatThrownBy(() -> sut.execute()).isInstanceOf(ex).hasMessageContaining(message);
 		try {
 			sut.execute();
+			fail("An exception was excepted but was not thrown");
 		} catch (Exception e) {
 			assertThat(e).isInstanceOf(ex);
 			assertThat(e).hasMessageContaining(message);

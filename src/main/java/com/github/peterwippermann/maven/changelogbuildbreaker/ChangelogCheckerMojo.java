@@ -25,21 +25,22 @@ public class ChangelogCheckerMojo extends AbstractMojo {
 
 	/**
 	 * Will match the following content
-	 * 
+	 *
 	 * ## [Unreleased]
-	 * 
+	 *
 	 * ### Added - new features
-	 * 
+	 *
 	 * ## [2.0.2] - 2017-11-23
 	 */
-	static final String DEFAULT_PATTERN_FOR_UNRELEASED_CHANGES = "\\R(?<section>##\\h*\\[Unreleased\\]\\h*)\\R(?:\\h*\\R)*(?<content>\\h*(?!##\\h*\\[)\\p{Graph}+.*)\\R";
+	static final String DEFAULT_PATTERN_FOR_UNRELEASED_CHANGES
+			= "(?:^|\\R)(?<section>##\\h*\\[Unreleased\\]\\h*)\\R(?:\\h*\\R)*(?<content>\\h*(?!##\\h*\\[)\\p{Graph}+.*)(?:$|\\R)";
 
 	private static final String UNRELEASED_CONTENT_CAPTURING_GROUP_NAME = "content";
 
 	private static final String UNRELEASED_SECTION_CAPTURING_GROUP_NAME = "section";
 
 	private static final String DEFAULT_ENCODING = "UTF-8";
-	
+
 	private static final String DEFAULT_FILE = "./CHANGELOG.MD";
 
 	/**
