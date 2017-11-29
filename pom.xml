@@ -4,11 +4,11 @@
 
 	<groupId>com.github.peterwippermann.maven</groupId>
 	<artifactId>changelog-buildbreaker-maven-plugin</artifactId>
-	<version>0.0.1</version>
+	<version>0.1.1</version>
 	<packaging>maven-plugin</packaging>
 
 	<name>Changelog Buildbreaker Maven Plugin</name>
-	<description>Changelogs should be in sync with the corresponding release. It is confusing for your users if the changelog does not reflect the latest changes. An obvious mistake are changes in your changelog tagged as "unreleased". This Maven plugin checks that there are no more unreleased changes in your changelog and break the release build otherwise. Your changelog is expected to respect the standard proposed by keepachangelog.com.</description>
+	<description>Changelogs should be in sync with the corresponding release. It is confusing for your users if the changelog does not reflect the latest changes. An obvious mistake are changes in your changelog tagged as "unreleased". This Maven plugin checks that there are no more unreleased changes in your changelog and breaks the release build otherwise. Your changelog is expected to follow the format proposed by keepachangelog.com.</description>
 	<url>https://github.com/PeterWippermann/changelog-buildbreaker</url>
 
 	<licenses>
