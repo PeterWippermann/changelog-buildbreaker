@@ -41,7 +41,7 @@ public class ChangelogCheckerMojo extends AbstractMojo {
 
 	private static final String DEFAULT_ENCODING = "UTF-8";
 
-	private static final String DEFAULT_FILE = "./CHANGELOG.MD";
+	private static final String DEFAULT_FILE = "./CHANGELOG.md";
 
 	/**
 	 * Location of the file.
