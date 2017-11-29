@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 
 /**
- * @author jholtkamp
+ * @author Jonas Holtkamp
  */
 public class ChangelogCheckerMojoTest {
 
