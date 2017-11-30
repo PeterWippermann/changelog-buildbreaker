@@ -23,6 +23,11 @@
 			<name>Peter Wippermann</name>
 			<email>oss-pepe@gmx.net</email>
 		</developer>
+		<developer>
+			<id>jonasholtkamp</id>
+			<name>Jonas Holtkamp</name>
+			<email>dev@jonas-holtkamp.de</email>
+		</developer> 
 	</developers>
 	<scm>
 		<connection>scm:git:git://github.com/PeterWippermann/changelog-buildbreaker.git</connection>
