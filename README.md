@@ -2,6 +2,8 @@ Changelog Buildbreaker Maven Plugin
 ===
 [![Build Status](https://travis-ci.org/PeterWippermann/changelog-buildbreaker.svg?branch=master)](https://travis-ci.org/PeterWippermann/changelog-buildbreaker)
 
+A Maven plugin that checks your [`CHANGELOG.md`](keepachangelog.com) for changes that aren't tied to a version number.
+
 ## Goal
 If a file `CHANGELOG.md` is present in the project's root directory, this plugin checks whether the content of the 
 `## [Unreleased]` section is empty or not. If there is content available the plugin execution fails, otherwise it 
