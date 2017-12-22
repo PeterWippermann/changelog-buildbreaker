@@ -1,11 +1,11 @@
 Changelog Buildbreaker Maven Plugin
 ===
 [![Build Status](https://travis-ci.org/PeterWippermann/changelog-buildbreaker.svg?branch=master)](https://travis-ci.org/PeterWippermann/changelog-buildbreaker)
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.peterwippermann.maven/changelog-buildbreaker-maven-plugin.svg)](https://mvnrepository.com/artifact/com.github.peterwippermann.maven/changelog-buildbreaker-maven-plugin)
 
-A Maven plugin that checks your changelog for changes that aren't tied to a version number.
+_A Maven plugin that checks your changelog for changes that aren't tied to a version number._
 
 ## Reasoning
-
 __Changelogs should be in sync__ with the corresponding release: It is confusing for your users if the changelog does not reflect the latest changes. An obvious mistake are changes in your changelog labelled as "unreleased".
 
 This Maven plugin checks that there are no more unreleased changes in your changelog and breaks build otherwise. It is __intended to be used in your release build__, since your changelog should have been finalised then.
@@ -21,7 +21,6 @@ If there are no unreleased changes, the build will silently continue. Otherwise 
 You can either run this plugin standalone or bind it to the `release` phase.
 
 ### Standalone
-
 You can always run the following without any preparation:
 ```
 mvn com.github.peterwippermann.maven:changelog-buildbreaker-maven-plugin:check
@@ -34,7 +33,6 @@ However, it's a good practice to explicitly pin the plugin's version by declarin
 If you are using the Maven Release Plugin for releasing, you can easily have it execute the Changelog Buildbreaker Plugin in the preparation of the release.
 
 1. Add the Changelog Buildbreaker Plugin to your build configuration
-
 2. Bind the plugin to the Maven Release Plugin
 ```
 <build>
@@ -58,7 +56,7 @@ If you are using the Maven Release Plugin for releasing, you can easily have it 
 ```
 
 ## Examples
-In `src/test/resources` you find some examples of (in-)valid `CHANGELOG.md` files. The general rule is: The plugin
+In `src/test/resources` you find some examples of valid and invalid `CHANGELOG` files. The general rule is: The plugin
 raises an error if there is a section `## [Unreleased]` that is NOT followed by another line starting with `##`,
 regardless of blank lines in between:
 
