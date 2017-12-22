@@ -13,28 +13,51 @@ This Maven plugin checks that there are no more unreleased changes in your chang
 Your changelog is expected to follow the __format proposed by [keepachangelog.com](http://www.keepachangelog.com)__.
 
 ## Check and remedy for unreleased changes 
-A `CHANGELOG.md` file has to be present in the project's root directory. An `## [Unreleased]` section has to be present but it must be empty, i.e. no visible characters, but blank lines are allowed. If necessary, the filename and the regular expression used for checking can both be configured.
+A `CHANGELOG.md` file has to be present in the project's root directory. An `## [Unreleased]` section has to be present but it must be empty, i.e. no visible characters, but blank lines are allowed. If necessary, the filename and the regular expression used for checking can be configured.
 
 If there are no unreleased changes, the build will silently continue. Otherwise the plugin will make the build fail. All you normally have to do then is to start a new section in your changelog for that current release and move all unreleased changes to that section.
 
 ## Integration and usage
-You can either run this plugin standalone or bind it to the `release` phase.
+You can either run this plugin on demand, bind it to Maven's "verify" phase or integrate it with the Maven Release Plugin.
 
-### Standalone
+### Call goal on-demand
 You can always run the following without any preparation:
-```
+```bash
 mvn com.github.peterwippermann.maven:changelog-buildbreaker-maven-plugin:check
 ```
 Maven will download the plugin automatically and run its `check` goal.
 However, it's a good practice to explicitly pin the plugin's version by declaring it in your build configuration (see below).
 
-### Bind the check to the Maven Release Plugin
+### Bind this plugin to Maven's "verify" phase
+```xml
+<build>
+	<plugins>
+		<plugin>
+			<groupId>com.github.peterwippermann.maven</groupId>
+			<artifactId>changelog-buildbreaker-maven-plugin</artifactId>
+			<version>0.1.1</version>
+			<executions>
+				<execution>
+					<id>check-changelog-before-deploy</id>
+					<phase>verify</phase>
+					<goals>
+						<goal>check</goal>
+					</goals>
+				</execution>
+			</executions>
+		</plugin>
+	</plugins>
+</build>
+```
+Running `mvn deploy` will also include the `verify` phase and thus execute the check.
+
+### Integrate the check with the Maven Release Plugin
 
 If you are using the Maven Release Plugin for releasing, you can easily have it execute the Changelog Buildbreaker Plugin in the preparation of the release.
 
 1. Add the Changelog Buildbreaker Plugin to your build configuration
 2. Bind the plugin to the Maven Release Plugin
-```
+```xml
 <build>
 	<plugins>
 		<plugin>
@@ -54,6 +77,11 @@ If you are using the Maven Release Plugin for releasing, you can easily have it 
 	</plugins>
 </build>
 ```
+Now, when preparing a release with
+```
+mvn release:prepare
+```
+the changelog will also be checked.
 
 ## Examples
 In `src/test/resources` you find some examples of valid and invalid `CHANGELOG` files. The general rule is: The plugin
