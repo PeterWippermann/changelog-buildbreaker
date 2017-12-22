@@ -77,11 +77,7 @@ If you are using the Maven Release Plugin for releasing, you can easily have it 
 	</plugins>
 </build>
 ```
-Now, when preparing a release with
-```
-mvn release:prepare
-```
-the changelog will also be checked.
+Now, when preparing a release with `mvn release:prepare` the changelog will also be checked.
 
 ## Examples
 In `src/test/resources` you find some examples of valid and invalid `CHANGELOG` files. The general rule is: The plugin
@@ -104,7 +100,7 @@ regardless of blank lines in between:
 ### Failing examples
 ```markdown
 ## [Unreleased]
-### Fixed
+- Fixed that mean bug
 ```
 
 ```markdown
@@ -126,9 +122,18 @@ The configuration __values in the example are the defaults__. So if you stick to
 			<configuration>
 				<changelogFile>CHANGELOG.MD</changelogFile>
 				<encoding>UTF-8</encoding>
-				<unreleasedChangesPattern>(?:^|\\R)(?<section>##\\h*\\[Unreleased\\]\\h*)\\R(?:\\h*\\R)*(?<content>\\h*(?!##\\h*\\[)\\p{Graph}+.*)(?:$|\\R)</unreleasedChangesPattern>
+				<unreleasedChangesPattern>(?:^|\\R)(?&lt;section&gt;##\\h*\\[Unreleased\\]\\h*)\\R(?:\\h*\\R)*(?&lt;content&gt;\\h*(?!##\\h*\\[)\\p{Graph}+.*)(?:$|\\R)</unreleasedChangesPattern>
 			</configuration>
 		</plugin>
 	</plugins>
 </build>
 ```
+
+## Understanding the RegEx
+Although the plugin only checks for an empty _Unreleased_ section, the used Regular Expression is far from trivial:
+```regex
+(?:^|\\R)(?<section>##\\h*\\[Unreleased\\]\\h*)\\R(?:\\h*\\R)*(?<content>\\h*(?!##\\h*\\[)\\p{Graph}+.*)(?:$|\\R)
+```
+
+Those are the important parts to understand:
+* `(?:^|\\R)` - The _unreleased_ section's heading is preceded by a line break or even by the beginning of the file
