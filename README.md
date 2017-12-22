@@ -22,7 +22,7 @@ You can either run this plugin on demand, bind it to Maven's "verify" phase or i
 
 ### Call goal on-demand
 You can always run the following without any preparation:
-```bash
+```sh
 mvn com.github.peterwippermann.maven:changelog-buildbreaker-maven-plugin:check
 ```
 Maven will download the plugin automatically and run its `check` goal.
@@ -89,12 +89,12 @@ raises an error if there is a section `## [Unreleased]` that is NOT followed by 
 regardless of blank lines in between:
 
 ### Passing examples
-```
+```markdown
 ## [Unreleased]
  
 ```
 
-```
+```markdown
 ## [Unreleased]
  
 ## Another section
@@ -102,13 +102,33 @@ regardless of blank lines in between:
 ```
 
 ### Failing examples
-```
+```markdown
 ## [Unreleased]
 ### Fixed
 ```
 
-```
+```markdown
 ## [Unreleased]
 ### Added
 - A cool feature
+```
+
+## Configuration options
+The following snippet illustrates the configuration parameters when referencing the plugin in your POM.
+The configuration __values in the example are the defaults__. So if you stick to the convention you don't have to set them.
+```xml
+<build>
+	<plugins>
+		<plugin>
+			<groupId>com.github.peterwippermann.maven</groupId>
+			<artifactId>changelog-buildbreaker-maven-plugin</artifactId>
+			[...]
+			<configuration>
+				<changelogFile>CHANGELOG.MD</changelogFile>
+				<encoding>UTF-8</encoding>
+				<unreleasedChangesPattern>(?:^|\\R)(?<section>##\\h*\\[Unreleased\\]\\h*)\\R(?:\\h*\\R)*(?<content>\\h*(?!##\\h*\\[)\\p{Graph}+.*)(?:$|\\R)</unreleasedChangesPattern>
+			</configuration>
+		</plugin>
+	</plugins>
+</build>
 ```
