@@ -26,55 +26,55 @@ You can always run the following without any preparation:
 mvn com.github.peterwippermann.maven:changelog-buildbreaker-maven-plugin:check
 ```
 Maven will download the plugin automatically and run its `check` goal.
-However, it's a good practice to explicitly pin the plugin's version by declaring it in your build configuration (see below).
+However, even when not binding the plugin to a certain Maven phase, it's a good practice to explicitly pin the plugin's version by declaring it in your build configuration (see below).
 
 ### Bind this plugin to Maven's "verify" phase
 ```xml
 <build>
-	<plugins>
-		<plugin>
-			<groupId>com.github.peterwippermann.maven</groupId>
-			<artifactId>changelog-buildbreaker-maven-plugin</artifactId>
-			<version>0.1.1</version>
-			<executions>
-				<execution>
-					<id>check-changelog-before-deploy</id>
-					<phase>verify</phase>
-					<goals>
-						<goal>check</goal>
-					</goals>
-				</execution>
-			</executions>
-		</plugin>
-	</plugins>
+  <plugins>
+    <plugin>
+      <groupId>com.github.peterwippermann.maven</groupId>
+      <artifactId>changelog-buildbreaker-maven-plugin</artifactId>
+      <version>0.1.1</version>
+      <executions>
+        <execution>
+          <id>check-changelog-before-deploy</id>
+          <phase>verify</phase>
+          <goals>
+            <goal>check</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+  </plugins>
 </build>
 ```
 Running `mvn deploy` will also include the `verify` phase and thus execute the check.
 
 ### Integrate the check with the Maven Release Plugin
 
-If you are using the Maven Release Plugin for releasing, you can easily have it execute the Changelog Buildbreaker Plugin in the preparation of the release.
+If you are using the [Maven Release Plugin](http://maven.apache.org/maven-release/maven-release-plugin/) for releasing, you can easily have it execute the Changelog Buildbreaker Plugin in the preparation of the release.
 
 1. Add the Changelog Buildbreaker Plugin to your build configuration
 2. Bind the plugin to the Maven Release Plugin
 ```xml
 <build>
-	<plugins>
-		<plugin>
-			<groupId>com.github.peterwippermann.maven</groupId>
-			<artifactId>changelog-buildbreaker-maven-plugin</artifactId>
-			<version>0.1.1</version>
-		</plugin>
-		<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-release-plugin</artifactId>
-			[...]
-			<configuration>
-				<preparationGoals>changelog-buildbreaker:check</preparationGoals>
-				<!-- Note that no GroupID is required and the shortname "changelog-buildbreaker" can be used -->
-			</configuration>
-		</plugin>
-	</plugins>
+  <plugins>
+    <plugin>
+      <groupId>com.github.peterwippermann.maven</groupId>
+      <artifactId>changelog-buildbreaker-maven-plugin</artifactId>
+      <version>0.1.1</version>
+    </plugin>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-release-plugin</artifactId>
+      [...]
+      <configuration>
+        <preparationGoals>changelog-buildbreaker:check</preparationGoals>
+        <!-- Note that no GroupID is required and the shortname "changelog-buildbreaker" can be used -->
+      </configuration>
+    </plugin>
+  </plugins>
 </build>
 ```
 Now, when preparing a release with `mvn release:prepare` the changelog will also be checked.
@@ -114,18 +114,18 @@ The following snippet illustrates the configuration parameters when referencing 
 The configuration __values in the example are the defaults__. So if you stick to the convention you don't have to set them.
 ```xml
 <build>
-	<plugins>
-		<plugin>
-			<groupId>com.github.peterwippermann.maven</groupId>
-			<artifactId>changelog-buildbreaker-maven-plugin</artifactId>
-			[...]
-			<configuration>
-				<changelogFile>CHANGELOG.MD</changelogFile>
-				<encoding>UTF-8</encoding>
-				<unreleasedChangesPattern>(?:^|\\R)(?&lt;section&gt;##\\h*\\[Unreleased\\]\\h*)\\R(?:\\h*\\R)*(?&lt;content&gt;\\h*(?!##\\h*\\[)\\p{Graph}+.*)(?:$|\\R)</unreleasedChangesPattern>
-			</configuration>
-		</plugin>
-	</plugins>
+  <plugins>
+    <plugin>
+      <groupId>com.github.peterwippermann.maven</groupId>
+      <artifactId>changelog-buildbreaker-maven-plugin</artifactId>
+      [...]
+      <configuration>
+        <changelogFile>CHANGELOG.MD</changelogFile>
+        <encoding>UTF-8</encoding>
+        <unreleasedChangesPattern>(?:^|\\R)(?&lt;section&gt;##\\h*\\[Unreleased\\]\\h*)\\R(?:\\h*\\R)*(?&lt;content&gt;\\h*(?!##\\h*\\[)\\p{Graph}+.*)(?:$|\\R)</unreleasedChangesPattern>
+      </configuration>
+    </plugin>
+  </plugins>
 </build>
 ```
 
@@ -142,5 +142,5 @@ If you want to use your own, modified RegEx, here's what you need to know about 
 * `(?:\\h*\\R)*` - An arbitrary number of "empty lines", which may also include whitespaces.
 * `(?<content>\\h*(?!##\\h*\\[)\\p{Graph}+.*)` - A named group _"content"_, which matches any printable characters - except for a 2nd-order heading. That 2nd-order heading would be the latest release.
 * `(?:$|\\R)` - The unreleased content is followed by a line break or end of file (EOF). 
-* The two named groups _section_ and _content_ are optional. But if they are defined, in case of a match their content will be logged.
+* The two named groups _section_ and _content_ are optional. But if they one of them is defined, in case of a match its content will be logged.
  
