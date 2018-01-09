@@ -135,5 +135,11 @@ Although the plugin only checks for an empty _Unreleased_ section, the used Regu
 (?:^|\\R)(?<section>##\\h*\\[Unreleased\\]\\h*)\\R(?:\\h*\\R)*(?<content>\\h*(?!##\\h*\\[)\\p{Graph}+.*)(?:$|\\R)
 ```
 
-Those are the important parts to understand:
+If you want to use your own, modified RegEx, here's what you need to know about the original version:
+* `\\` - In RegEx special characters are masked by a backslash `\`. However, in XML a backslash has to be escaped as well. Thus a double backslash `\\` has to be used in the XML configuration but not in the plugin's Java sources. 
 * `(?:^|\\R)` - The _unreleased_ section's heading is preceded by a line break or even by the beginning of the file
+* `(?<section>##\\h*\\[Unreleased\\]\\h*)\\R` - Locates the actual section heading _"[Unreleased]"_. An arbitrary number of (horizontal) whitespaces are allowed at the beginning and the end. The match is assigned to a named group _"section"_ and will be printed in the logs during plugin execution.
+* `(?:\\h*\\R)*` - An arbitrary number of "empty lines", which may also include whitespaces.
+* `(?<content>\\h*(?!##\\h*\\[)\\p{Graph}+.*)` - A named group _"content"_, which matches any printable characters - except for a 2nd-order heading. That 2nd-order heading would be the latest release.
+* The two named groups _section_ and _content_ are optional. But if they are defined, in case of a match their content will be logged.
+ 
