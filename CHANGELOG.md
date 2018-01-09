@@ -9,6 +9,7 @@ Entry order: Added, Changed, Deprecated, Removed, Fixed, Security
 ## [Unreleased]
 ### Changed
 - Added basic information to the README
+- The RegEx pattern is only printed in the log, when DEBUG logging is enabled (`mvn -X ...`) 
 
 
 ### [0.1.1] - 2017-09-22

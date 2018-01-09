@@ -74,7 +74,11 @@ public class ChangelogCheckerMojo extends AbstractMojo {
 			throw new MojoExecutionException("Could not read the changelog file!", e);
 		}
 
-		getLog().info("Checking changelog for pattern: " + unreleasedChangesPattern);
+		if(getLog().isDebugEnabled()) {
+			getLog().debug("Checking changelog for pattern: " + unreleasedChangesPattern);
+		} else {
+			getLog().info("Checking changelog for unreleased changes...");
+		}
 		Pattern pattern = Pattern.compile(unreleasedChangesPattern);
 
 		Matcher matcher = pattern.matcher(changelogFileContent);

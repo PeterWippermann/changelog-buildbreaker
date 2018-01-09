@@ -4,7 +4,7 @@
 
 	<groupId>com.github.peterwippermann.maven</groupId>
 	<artifactId>changelog-buildbreaker-maven-plugin</artifactId>
-	<version>0.1.1</version>
+	<version>0.1.2</version>
 	<packaging>maven-plugin</packaging>
 
 	<name>Changelog Buildbreaker Maven Plugin</name>
