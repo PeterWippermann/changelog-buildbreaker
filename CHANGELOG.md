@@ -7,10 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 Entry order: Added, Changed, Deprecated, Removed, Fixed, Security
 
 ## [Unreleased]
+
+## [0.1.2] - 2018-01-09
 ### Changed
 - Added basic information to the README
 - The RegEx pattern is only printed in the log, when DEBUG logging is enabled (`mvn -X ...`) 
 
-
-### [0.1.1] - 2017-09-22
+## [0.1.1] - 2017-09-22
 Initial version
