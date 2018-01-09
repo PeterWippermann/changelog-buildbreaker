@@ -5,6 +5,16 @@ Changelog Buildbreaker Maven Plugin
 
 _A Maven plugin that checks your changelog for changes that aren't tied to a version number._
 
+## Contents
+
+- [Reasoning](#reasoning)
+- [Check and remedy for unreleased changes](#check-and-remedy-for-unreleased-changes)
+- [Integration and usage](#integration-and-usage)
+- [Examples](#examples)
+- [Configuration options](#configuration-options)
+- [Understanding the RegEx](#understanding-the-regex)
+
+
 ## Reasoning
 __Changelogs should be in sync__ with the corresponding release: It is confusing for your users if the changelog does not reflect the latest changes. An obvious mistake are changes in your changelog labelled as "unreleased".
 
@@ -50,6 +60,7 @@ However, even when not binding the plugin to a certain Maven phase, it's a good 
 </build>
 ```
 Running `mvn deploy` will also include the `verify` phase and thus execute the check.
+This check __will also affect your local `mvn install`!__ So if you want to have your changelog checked only for a release, you can move this plugin execution to a dedicated [Maven profile](http://maven.apache.org/guides/introduction/introduction-to-profiles.html) like "release".
 
 ### Integrate the check with the Maven Release Plugin
 
