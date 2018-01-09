@@ -60,7 +60,8 @@ However, even when not binding the plugin to a certain Maven phase, it's a good 
 </build>
 ```
 Running `mvn deploy` will also include the `verify` phase and thus execute the check.
-This check __will also affect your local `mvn install`!__ So if you want to have your changelog checked only for a release, you can move this plugin execution to a dedicated [Maven profile](http://maven.apache.org/guides/introduction/introduction-to-profiles.html). This is what we did [in this plugin's POM](https://github.com/PeterWippermann/changelog-buildbreaker/blob/79298ab9d762640537771c1f69b5eb24c83ddd1e/pom.xml#L138-L156) as well!
+
+Caution: __This check will then also affect your local `mvn install`!__ So if you want to have your changelog checked for a release only, you can move this plugin execution to a dedicated [Maven profile](http://maven.apache.org/guides/introduction/introduction-to-profiles.html). This is also what we did [in this plugin's own POM](https://github.com/PeterWippermann/changelog-buildbreaker/blob/79298ab9d762640537771c1f69b5eb24c83ddd1e/pom.xml#L138-L156)!
 
 ### Integrate the check with the Maven Release Plugin
 
@@ -93,7 +94,7 @@ Now, when preparing a release with `mvn release:prepare` the changelog will also
 ## Examples
 In `src/test/resources` you find some examples of valid and invalid `CHANGELOG` files. The general rule is: The plugin
 raises an error if there is a section `## [Unreleased]` that is NOT followed by another line starting with `##`,
-regardless of blank lines in between:
+regardless of blank lines in between.
 
 ### Passing examples
 ```markdown
