@@ -92,20 +92,6 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>com.github.peterwippermann.maven</groupId>
-				<artifactId>changelog-buildbreaker-maven-plugin</artifactId>
-				<version>0.1.1</version>
-				<executions>
-					<execution>
-						<id>check-changelog-before-deploy</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-plugin-plugin</artifactId>
 				<version>3.5</version>
@@ -154,6 +140,20 @@
 			<id>release</id>
 			<build>
 				<plugins>
+					<plugin>
+						<groupId>com.github.peterwippermann.maven</groupId>
+						<artifactId>changelog-buildbreaker-maven-plugin</artifactId>
+						<version>0.1.1</version>
+						<executions>
+							<execution>
+								<id>check-changelog-before-deploy</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>check</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-source-plugin</artifactId>
