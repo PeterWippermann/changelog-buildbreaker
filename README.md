@@ -130,7 +130,7 @@ The configuration __values in the example are the defaults__. So if you stick to
 ```
 
 ## Understanding the RegEx
-Although the plugin only checks for an empty _Unreleased_ section, the used Regular Expression is far from trivial:
+Although the plugin only checks for an empty _Unreleased_ section, the Regular Expression used is far from trivial:
 ```regex
 (?:^|\\R)(?<section>##\\h*\\[Unreleased\\]\\h*)\\R(?:\\h*\\R)*(?<content>\\h*(?!##\\h*\\[)\\p{Graph}+.*)(?:$|\\R)
 ```
@@ -141,5 +141,6 @@ If you want to use your own, modified RegEx, here's what you need to know about 
 * `(?<section>##\\h*\\[Unreleased\\]\\h*)\\R` - Locates the actual section heading _"[Unreleased]"_. An arbitrary number of (horizontal) whitespaces are allowed at the beginning and the end. The match is assigned to a named group _"section"_ and will be printed in the logs during plugin execution.
 * `(?:\\h*\\R)*` - An arbitrary number of "empty lines", which may also include whitespaces.
 * `(?<content>\\h*(?!##\\h*\\[)\\p{Graph}+.*)` - A named group _"content"_, which matches any printable characters - except for a 2nd-order heading. That 2nd-order heading would be the latest release.
+* `(?:$|\\R)` - The unreleased content is followed by a line break or end of file (EOF). 
 * The two named groups _section_ and _content_ are optional. But if they are defined, in case of a match their content will be logged.
  
