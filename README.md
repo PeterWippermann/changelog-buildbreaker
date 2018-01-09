@@ -60,7 +60,7 @@ However, even when not binding the plugin to a certain Maven phase, it's a good 
 </build>
 ```
 Running `mvn deploy` will also include the `verify` phase and thus execute the check.
-This check __will also affect your local `mvn install`!__ So if you want to have your changelog checked only for a release, you can move this plugin execution to a dedicated [Maven profile](http://maven.apache.org/guides/introduction/introduction-to-profiles.html) like "release".
+This check __will also affect your local `mvn install`!__ So if you want to have your changelog checked only for a release, you can move this plugin execution to a dedicated [Maven profile](http://maven.apache.org/guides/introduction/introduction-to-profiles.html). This is what we did [in this plugin's POM](https://github.com/PeterWippermann/changelog-buildbreaker/blob/79298ab9d762640537771c1f69b5eb24c83ddd1e/pom.xml#L138-L156) as well!
 
 ### Integrate the check with the Maven Release Plugin
 
