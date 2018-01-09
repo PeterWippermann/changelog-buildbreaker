@@ -28,12 +28,12 @@ public class ChangelogCheckerMojo extends AbstractMojo {
 	 *
 	 * ## [Unreleased]
 	 *
-	 * ### Added - new features
+	 * ### Added
+	 * - new features
 	 *
 	 * ## [2.0.2] - 2017-11-23
 	 */
-	static final String DEFAULT_PATTERN_FOR_UNRELEASED_CHANGES
-			= "(?:^|\\R)(?<section>##\\h*\\[Unreleased\\]\\h*)\\R(?:\\h*\\R)*(?<content>\\h*(?!##\\h*\\[)\\p{Graph}+.*)(?:$|\\R)";
+	static final String DEFAULT_PATTERN_FOR_UNRELEASED_CHANGES = "(?:^|\\R)(?<section>##\\h*\\[Unreleased\\]\\h*)\\R(?:\\h*\\R)*(?<content>\\h*(?!##\\h*\\[)\\p{Graph}+.*)(?:$|\\R)";
 
 	private static final String UNRELEASED_CONTENT_CAPTURING_GROUP_NAME = "content";
 
@@ -117,8 +117,8 @@ public class ChangelogCheckerMojo extends AbstractMojo {
 		}
 
 		if (!changelogFile.exists()) {
-			throw new MojoExecutionException(
-					"The changelog file " + changelogFile.getAbsolutePath() + " does not exist! Use the \"changelogFile\" configuration parameter of this plugin to set a custom file path.");
+			throw new MojoExecutionException("The changelog file " + changelogFile.getAbsolutePath()
+					+ " does not exist! Use the \"changelogFile\" configuration parameter of this plugin to set a custom file path.");
 		} else {
 			getLog().debug("The changelog file exists.");
 		}
