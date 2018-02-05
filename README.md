@@ -155,5 +155,5 @@ If you want to use your own, modified RegEx, here's what you need to know about 
 * `(?:\\h*\\R)*` - An arbitrary number of "empty lines", which may also include whitespaces.
 * `(?<content>\\h*(?!##\\h*\\[)\\p{Graph}+.*)` - A named group _"content"_, which matches any printable characters - except for a 2nd-order heading. That 2nd-order heading would be the latest release.
 * `(?:$|\\R)` - The unreleased content is followed by a line break or end of file (EOF). 
-* The two named groups _section_ and _content_ are optional. But if they one of them is defined, in case of a match its content will be logged.
+* The two named groups _section_ and _content_ are optional. But if one of them is defined, in case of a match its content will be logged.
  
