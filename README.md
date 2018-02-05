@@ -61,7 +61,7 @@ However, even when not binding the plugin to a certain Maven phase, it's a good 
 ```
 Running `mvn deploy` will also include the `verify` phase and thus execute the check.
 
-Caution: __This check will then also affect your local `mvn install`!__ So if you want to have your changelog checked for a release only, you can move this plugin execution to a dedicated [Maven profile](http://maven.apache.org/guides/introduction/introduction-to-profiles.html). This is also what we did [in this plugin's own POM](https://github.com/PeterWippermann/changelog-buildbreaker/blob/79298ab9d762640537771c1f69b5eb24c83ddd1e/pom.xml#L138-L156)!
+Caution: __This check will then also affect your local development when running `mvn install`!__ So if you want to have your changelog checked for a release only, you can move this plugin execution to a dedicated [Maven profile](http://maven.apache.org/guides/introduction/introduction-to-profiles.html). This is also what we did [in this plugin's own POM](https://github.com/PeterWippermann/changelog-buildbreaker/blob/79298ab9d762640537771c1f69b5eb24c83ddd1e/pom.xml#L138-L156)!
 
 ### Integrate the check with the Maven Release Plugin
 
@@ -82,8 +82,9 @@ If you are using the [Maven Release Plugin](http://maven.apache.org/maven-releas
       <artifactId>maven-release-plugin</artifactId>
       [...]
       <configuration>
-        <preparationGoals>changelog-buildbreaker:check</preparationGoals>
+        <preparationGoals>clean changelog-buildbreaker:check verify</preparationGoals>
         <!-- Note that no GroupID is required and the shortname "changelog-buildbreaker" can be used -->
+        <!-- "clean verify" are the default goals of the release plugin and should be kept. -->
       </configuration>
     </plugin>
   </plugins>
